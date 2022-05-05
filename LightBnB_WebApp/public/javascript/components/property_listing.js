@@ -21,6 +21,24 @@ $(() => {
             <div class="property-listing__rating">${Math.round(property.average_rating * 100) / 100}/5 stars</div>
             <div class="property-listing__price">$${property.cost_per_night/100.0}/night</div>
           </footer>
+          <form action="/api/reservation" method="post" class="form-example">
+            <div class="form-example">
+              <input type="hidden" name="property_id" value="${property.id}">
+            </div>
+            <div class="form-example">
+              <input type="date" id="start" name="start_date"
+              value="2022-04-20"
+              min="2022-04-20" max="2023-12-31">
+            </div>
+            <div class="form-example">
+              <input type="date" id="end" name="end_date"
+              value="2022-04-21"
+              min="2022-04-20" max="2023-12-31">
+            </div>
+            <div class="form-example">
+              <input type="submit" value="Make Reservation!">
+            </div>
+          </form>
         </section>
       </article>
     `

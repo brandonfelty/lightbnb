@@ -237,7 +237,6 @@ const addProperty = function(property) {
   const newParking = property.parking_spaces;
   const numBathrooms = property.number_of_bathrooms;
   const numBedrooms = property.number_of_bedrooms;
-  console.log(property)
 
   return pool
     .query(`INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, street, city, province, post_code, country, parking_spaces, number_of_bathrooms, number_of_bedrooms) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *`, [newOwnerId, newTitle, newDescription, newThumbnail, newCover, newCost, newStreet, newCity, newProvince, newPostalCost, newCountry, newParking, numBathrooms, numBedrooms])
@@ -249,3 +248,22 @@ const addProperty = function(property) {
     });
 }
 exports.addProperty = addProperty;
+
+const addReservation = function(reservation) {
+  const newStart = reservation.start_date;
+  const newEnd = reservation.end_date;
+  const propertyId = reservation.property_id;
+  const guestId = reservation.guest_id;
+  //console.log(reservation)
+
+  return pool
+    .query(`INSERT INTO reservations (start_date, end_date, property_id, guest_id) VALUES ($1, $2, $3, $4) RETURNING *`, [newStart, newEnd, propertyId, guestId])
+    .then((result) => {
+      //console.log(result.rows)
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+exports.addReservation = addReservation;
